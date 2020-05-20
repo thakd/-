@@ -1,0 +1,8 @@
+#!/Users/KDH/Desktop/멋쟁이사자처럼8기/CRUD강의/myvenv/bin/python3
+# -*- coding: utf-8 -*-
+import re
+import sys
+from pylint import run_pylint
+if __name__ == '__main__':
+    sys.argv[0] = re.sub(r'(-script\.pyw|\.exe)?$', '', sys.argv[0])
+    sys.exit(run_pylint())
