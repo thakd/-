@@ -2,9 +2,9 @@ from django.shortcuts import render,get_object_or_404,redirect
 from .models import Blog
 from django.utils import timezone
 # Create your views here.
-def home(request):
+def blog(request):
     blogs = Blog.objects.all()
-    return render(request,'home.html', { 'blogs' : blogs })
+    return render(request,'blog.html', { 'blogs' : blogs })
 
 # R
 def detail(request, blog_id):
@@ -24,3 +24,22 @@ def create(request):
 
     # 새로운 글 url 주소로 이동
     return redirect('/blog/' + str(blog.id))
+
+#삭제
+def delete(request, blog_id):
+    blog = get_object_or_404(Blog, pk=blog_id)
+    blog.delete()
+    return redirect('/blog/')
+#update
+
+def update(request, blog_id):
+    blog = get_object_or_404(Blog, pk =blog_id)
+
+    if request.method == "POST":
+        blog.title = request.POST['title']
+        blog.body = request.POST['body']
+        blog.pub_date = timezone.datetime.now()
+        blog.save()
+        return redirect('/blog/' +str(blog.id))
+    else:
+        return render(request,'update.html')
